@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLE_ARCHIVE | Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo" onclick="window.location.href='index.html'">SOLE_ARCHIVE®</div>
+        <div class="nav-links">
+            <a href="index.html" class="active">Shop</a>
+            <a href="categories.html">Catalog</a>
+            <a href="#" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</a>
+            <a href="#" class="account-btn" onclick="openModal('auth-modal')">LOGIN</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-text">
+            <div class="badge">GIVEAWAY LIVE // ENDS IN 2H</div>
+            <h1>TRAVIS SCOTT <br><span class="outline">PHANTOM</span></h1>
+            
+            <div class="timer-box">
+                <p>GIVEAWAY CLOSES IN:</p>
+                <div id="countdown">00:00:00</div>
+            </div>
+
+            <button class="btn-primary" onclick="openModal('raffle-modal')">
+                ENTER GIVEAWAY <i class="fa-solid fa-gift"></i>
+            </button>
+        </div>
+        
+        <div class="hero-image-container">
+            <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?q=80&w=1000&auto=format&fit=crop" alt="Hero Sneaker">
+            <div class="floating-price">FREE ENTRY</div>
+        </div>
+    </header>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            /// FLASH SALE: 50% OFF SELECTED ITEMS /// GIVEAWAY LIVE /// WORLDWIDE SHIPPING /// VERIFIED AUTHENTIC ///
+        </div>
+    </div>
+
+    <section class="section-container">
+        <div class="section-header">
+            <h2>FLASH DEALS & DROPS</h2>
+            <a href="categories.html" class="view-all">VIEW ALL <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="grid" id="featured-grid">
+            </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>SOLE_ARCHIVE®</h3>
+                <p>The world's premier marketplace for authentic sneakers.</p>
+            </div>
+            <div class="footer-col">
+                <h4>SUPPORT</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Authenticity Guarantee</a>
+            </div>
+            <div class="footer-col">
+                <h4>LEGAL</h4>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="copyright">© 2024 SOLE_ARCHIVE.</div>
+    </footer>
+
+    <div id="cart-modal" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>YOUR CART</h3>
+            <button onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="cart-items" class="cart-body"></div>
+        <div class="cart-footer">
+            <div class="total-row"><span>TOTAL:</span><span id="cart-total">$0</span></div>
+            <button class="btn-primary full">CHECKOUT</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="modal-overlay" onclick="toggleCart()"></div>
+
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-box small">
+            <div class="modal-header">
+                <h3 id="auth-title">MEMBER LOGIN</h3>
+                <button onclick="closeModal('auth-modal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="input-group"><label>Email</label><input type="email" placeholder="user@sole.com" required></div>
+                <div class="input-group"><label>Password</label><input type="password" placeholder="••••••" required></div>
+                <button class="btn-primary full">ENTER SHOP</button>
+                <p class="auth-switch" onclick="toggleAuth('signup')">New here? <span>Create Account</span></p>
+            </form>
+
+            <form id="signup-form" class="hidden" onsubmit="handleSignup(event)">
+                <div class="input-group"><label>Email</label><input type="email" required></div>
+                <div class="input-group"><label>Password</label><input type="password" id="sp-pass" required></div>
+                <div class="input-group"><label>Confirm Password</label><input type="password" id="sp-repass" required></div>
+                <button class="btn-primary full">CREATE ACCOUNT</button>
+                <p class="auth-switch" onclick="toggleAuth('login')">Already a member? <span>Login</span></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="detail-title">PRODUCT</h3>
+                <button onclick="closeModal('product-modal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <img id="detail-img" src="" class="modal-img">
+            <div class="modal-info-row">
+                <p id="detail-brand" style="color:var(--accent); font-weight:bold;"></p>
+                <p id="detail-price" style="color:white; font-size:1.5rem; font-weight:bold;"></p>
+            </div>
+            
+            <span class="size-label">SELECT SIZE (US)</span>
+            <div class="size-grid" id="size-container"></div>
+
+            <button id="add-btn" class="btn-primary full">ADD TO CART</button>
+        </div>
+    </div>
+
+    <div id="raffle-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>ENTER GIVEAWAY</h3>
+                <button onclick="closeModal('raffle-modal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleRaffle(event)">
+                <div class="input-group"><label>Size (US)</label><input type="text" required></div>
+                <div class="input-group"><label>Email</label><input type="email" required></div>
+                <button class="btn-primary full">SUBMIT ENTRY</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-box small" style="text-align: center;">
+            <div style="font-size: 3rem; color: var(--accent); margin-bottom: 15px;">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 id="success-title" style="font-size: 1.5rem; margin-bottom: 10px;">SUCCESS</h3>
+            <p id="success-msg" style="color: #888; margin-bottom: 20px;">Welcome to the Archive.</p>
+            <button class="btn-primary full" onclick="closeModal('success-modal')">CONTINUE</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
